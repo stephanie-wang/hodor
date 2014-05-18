@@ -270,6 +270,7 @@ each linked subtree follow the same pattern.
 
 \begin{figure}[h!]
     \centering
+    \vspace{0.25in}
     \includegraphics[width=1\textwidth]{fig2.eps}
     \caption{
         The final disk layout of the same ORT shown in Figure 1 after flushing
@@ -281,7 +282,7 @@ each linked subtree follow the same pattern.
         from max to min, and each node is immediately followed by its linked
         subtree in the next dimension. 
     }
-    \vspace{0.5in}
+    \vspace{0.25in}
 \end{figure}
 
 % move fig 2 here
@@ -378,15 +379,6 @@ backwards along the leaf's \ms{prev} pointers until the leaf containing the
 minimum value is found. This entire operation takes $O(\log_B m + k)$ reads: the
 search down the tree touches $\log_B m$ nodes, and the walk touches $k$ leaves.
 
-The algorithm makes two different types of recursive calls. First, the $O(B)$
-nodes which are fully contained in the range (start, end) are loaded into
-memory, and the algorithm recurses on the linked tree of each one. These
-\textit{linked-tree recursions} can happen at most $d$ times in any query before
-the last dimension is reached. Second, the algorithm recurses on a constant
-number of its children (at most two) which contain the start and end values of
-the range. Each of these \textit{child node recursions} operates on
-$O(\frac{m}{B})$ elements.
-
 \begin{algorithm}[H]
     \caption{Find all elements in a multidimensional range from a tree leaf.}
     \begin{algorithmic}[1]
@@ -405,6 +397,16 @@ $O(\frac{m}{B})$ elements.
     \end{algorithmic}
 \end{algorithm}
 
+
+The algorithm makes two different types of recursive calls. First, the $O(B)$
+nodes which are fully contained in the range (start, end) are loaded into
+memory, and the algorithm recurses on the linked tree of each one. These
+\textit{linked-tree recursions} can happen at most $d$ times in any query before
+the last dimension is reached. Second, the algorithm recurses on a constant
+number of its children (at most two) which contain the start and end values of
+the range. Each of these \textit{child node recursions} operates on
+$O(\frac{m}{B})$ elements.
+
 Once \textsc{RangeQuery} is
 called on a leaf, the leaf will either return some subset of its data, which is
 already loaded, or recurse on a linked leaf in the next dimension. This requires
@@ -412,7 +414,7 @@ one disk read per dimension, for $O(d)$ reads in total.
 
 Let the disk-read complexity of the algorithm with $m$ nodes and $d$ dimensions
 equal T($m, d$). Each of the constant number of child node recursions operates
-on $\frac[m}{B}$ elements, and takes T($\frac{m}{B}, d$) reads. Using analysis
+on $\frac{m}{B}$ elements, and takes T($\frac{m}{B}, d$) reads. Using analysis
 similar to that used in Lecture 3, this evaluates to $O(\log_B m)$ reads total
 for any tree \cite{lecture}. In the last dimension, there is also the
 possibility of a leaf-to-leaf walk, so the total complexity becomes $O(\log_B m
@@ -493,7 +495,7 @@ back seek. \\
 
     \begin{figure}[h!]
         \centering
-        \vspace{0.5in}
+        \vspace{0.25in}
         \includegraphics[width=0.6\textwidth]{fig3.eps}
         \caption{
             A range query on one tree layer of the entire BORT can be modeled as
@@ -506,7 +508,7 @@ back seek. \\
             \textsc{RangeQuery} recursions on all other nodes in this layer,
             including 0, 1, 3 and 4, require only one child node recursive call.
         }
-        \vspace{0.5in}
+        \vspace{0.25in}
     \end{figure}
 
     For a range query on a tree, there is at most one recursive step that
