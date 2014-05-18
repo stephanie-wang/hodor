@@ -10,7 +10,6 @@
 \usepackage[colorinlistoftodos]{todonotes}
 \usepackage{pslatex}
 \usepackage{enumerate}
-\usepackage[margin=1in]{geometry}
 \usepackage{listings}
 \usepackage{color}
 \usepackage[margin=.25in]{caption}
@@ -103,12 +102,12 @@ on-disk implementation of ORTs.
 The main obstacle to an on-disk implementation of ORTs is the added overhead in
 disk access time. Therefore, in this paper, we explore different methods of
 optimizing disk I/O accesses, in terms of disk read frequency and overall read
-time. First, we present our overall design, and specific modifications we made
+time. First, we present our overall design and specific modifications we made
 to the standard ORT structure. Second, we describe our serialization protocols
 for the data structure. Third, we analyze each query in terms of both total disk
 accesses and a new metric, \textit{back seeks}, which we introduce here. We
 describe how to achieve faster runtime by eliminating back seeks from range
-queries. Finally, we discuss a Python implentation of HODOR, and discuss how our
+queries. Finally, we discuss a Python implementation of HODOR and discuss how our
 findings from this project may contribute to future work.
 
 \section{Design}
@@ -215,12 +214,12 @@ storing the data points themselves as delimited strings in a separate
 BORT. A range query can return a set of pointers into the data file that can
 be sorted and used to access the actual data sequentially from the file. This
 method requires one extra disk read for each datapoint in the result set, but no
-extra back seeks. Our final implentation of HODOR uses the block serialization
+extra back seeks. Our final implementation of HODOR uses the block serialization
 method.  
 
 \subsection{Tree Serialization}
 
-Tree serialization is executed while preprocessing the datapoints into a tree,
+Tree serialization is executed while preprocessing the data points into a tree,
 so that the order of nodes in the tree file is the same as the order in which
 HODOR preprocesses them. The tree is built recursively, from the bottom up.
 HODOR starts with a set of children. If these are leaves, then HODOR sorts them
