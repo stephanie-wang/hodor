@@ -1,4 +1,5 @@
-buzhug-ort
+HODOR: HODOR On-Disk Orthogonal Range-trees
 ==========
 
-A version of the python buzhug database that uses an orthogonal range b+ tree for faster range queries.
+An on-disk implementation of orthogonal range trees, a data structure for range
+queries on d dimensions.

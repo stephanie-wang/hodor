@@ -1,1 +1,0 @@
-__id__:int __version__:int address:str flag:bool resident:<base>dummy
